@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, must_be_immutable
 
 import 'package:flutter/material.dart';
 
@@ -12,17 +12,31 @@ class LoginPage extends StatelessWidget {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: _primaryColor,
-        body: Align(
+      backgroundColor: _primaryColor,
+      body: Align(
+        child: Container(
+          height: _deviceHeight*0.70,
+          width: _deviceWidth,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _avatarWidget(),
+              SizedBox(
+                height: _deviceHeight * 0.05,
+              ),
+              _emailTextField(),
+              _passwordTextField(),
+              SizedBox(
+                height: _deviceHeight * 0.10,
+              ),
+              _loginButton(),
             ],
           ),
-        ),);
+        ),
+      ),
+    );
   }
 
   Widget _avatarWidget() {
@@ -34,10 +48,93 @@ class LoginPage extends StatelessWidget {
         color: _secondaryColor,
         borderRadius: BorderRadius.circular(500),
         image: DecorationImage(
-            image: AssetImage(
-          '../../assets/images/avatar.png',
-        ),),
+          image: AssetImage(
+            '../../assets/images/avatar.png',
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget _emailTextField() {
+    return Container(
+      width: _deviceWidth * 0.70,
+      child: TextField(
+        cursorColor: Colors.white,
+        autocorrect: false,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        decoration: InputDecoration(
+          hintText: "Charankulal0241@gmail.com",
+          hintStyle: TextStyle(
+            color: Colors.white,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _passwordTextField() {
+    return Container(
+      width: _deviceWidth * 0.70,
+      child: TextField(
+        obscureText: true,
+        cursorColor: Colors.white,
+        autocorrect: false,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        decoration: InputDecoration(
+          hintText: "Password",
+          hintStyle: TextStyle(
+            color: Colors.white,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _loginButton() {
+    return MaterialButton(
+      minWidth: _deviceWidth * 0.30,
+      height: _deviceWidth * 0.10,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+        side: BorderSide(
+          color: Colors.white,
+        ),
+      ),
+      child: Text(
+        "LOG IN",
+        style: TextStyle(
+          fontSize: 16,
+          color: _primaryColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      onPressed: () {},
     );
   }
 }
