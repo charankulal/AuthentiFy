@@ -1,12 +1,56 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, must_be_immutable
 
 import 'package:flutter/material.dart';
+import '../utils/animations/login_page_animations.dart';
 
-class LoginPage extends StatelessWidget {
+class AnimatedLoginPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _AnimatedLoginPageState();
+  }
+}
+
+class _AnimatedLoginPageState extends State<AnimatedLoginPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+      reverseDuration: Duration(milliseconds: 400),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _LoginPage(_controller);
+  }
+}
+
+class _LoginPage extends StatelessWidget {
   double _deviceHeight = 0;
   double _deviceWidth = 0;
   final Color _primaryColor = const Color.fromRGBO(125, 191, 211, 1.0);
   Color _secondaryColor = Color.fromRGBO(169, 224, 241, 1.0);
+
+  late AnimationController _controller;
+  late EnterAnimation _animation;
+
+  _LoginPage(_controller) {
+    _controller = _controller;
+    _animation = EnterAnimation(_controller);
+    _controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
@@ -15,7 +59,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: _primaryColor,
       body: Align(
         child: Container(
-          height: _deviceHeight*0.70,
+          height: _deviceHeight * 0.70,
           width: _deviceWidth,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,18 +85,28 @@ class LoginPage extends StatelessWidget {
 
   Widget _avatarWidget() {
     double _circleD = _deviceHeight * 0.25;
-    return Container(
-      height: _circleD,
-      width: _circleD,
-      decoration: BoxDecoration(
-        color: _secondaryColor,
-        borderRadius: BorderRadius.circular(500),
-        image: DecorationImage(
-          image: AssetImage(
-            '../../assets/images/avatar.png',
+    return AnimatedBuilder(
+      animation: _animation.controller,
+      builder: (BuildContext context, Widget? widget) {
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.diagonal3Values(
+              _animation.circleSize.value, _animation.circleSize.value, 1),
+          child: Container(
+            height: _circleD,
+            width: _circleD,
+            decoration: BoxDecoration(
+              color: _secondaryColor,
+              borderRadius: BorderRadius.circular(500),
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/avatar.png', // Correct asset path
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
