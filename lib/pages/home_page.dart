@@ -3,6 +3,7 @@
 import 'package:authentify_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import '../utils/page_routes/fade_page_route.dart';
+import '../utils/page_routes/slide_page_routes.dart';
 import '../utils/animations/login_page_animations.dart';
 
 class AnimatedHomePage extends StatefulWidget {
@@ -139,7 +140,7 @@ class _HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.pushReplacement(_context, FadePageRoute(AnimatedLoginPage()));
+        Navigator.pushReplacement(_context, SlidePageRoute(AnimatedLoginPage()));
       },
     );
   }
