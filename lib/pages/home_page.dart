@@ -3,11 +3,51 @@
 import 'package:authentify_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import '../utils/page_routes/fade_page_route.dart';
+import '../utils/animations/login_page_animations.dart';
 
-class HomePage extends StatelessWidget {
+class AnimatedHomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _AnimatedHomePageState();
+  }
+}
+
+class _AnimatedHomePageState extends State<AnimatedHomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1300),
+      reverseDuration: Duration(milliseconds: 1300),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _HomePage(_controller);
+  }
+}
+
+class _HomePage extends StatelessWidget {
   late double _deviceHeight;
   late double _deviceWidth;
   final Color _primaryColor = Color.fromRGBO(169, 224, 241, 1.0);
+  final AnimationController _controller;
+  late EnterAnimation _animation;
+
+  _HomePage(this._controller) {
+    _animation = EnterAnimation(_controller);
+    _controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +84,28 @@ class HomePage extends StatelessWidget {
 
   Widget _avatarWidget() {
     double _circleD = _deviceHeight * 0.25;
-    return Container(
-      height: _circleD,
-      width: _circleD,
-      decoration: BoxDecoration(
-        color: _primaryColor,
-        borderRadius: BorderRadius.circular(500),
-        image: DecorationImage(
-          image: AssetImage(
-            'assets/images/avatar.png', // Correct asset path
+    return AnimatedBuilder(
+        animation: _animation.controller,
+        builder: (BuildContext _context, Widget? _widget) {
+        return Transform(
+          alignment: Alignment.center,
+      transform: Matrix4.diagonal3Values(
+              _animation.circleSize.value, _animation.circleSize.value, 1),
+      child: Container(
+        height: _circleD,
+        width: _circleD,
+        decoration: BoxDecoration(
+          color: _primaryColor,
+          borderRadius: BorderRadius.circular(500),
+          image: DecorationImage(
+            image: AssetImage(
+              'assets/images/avatar.png', // Correct asset path
+            ),
           ),
         ),
       ),
     );
+        });
   }
 
   Widget _nameWidget() {
@@ -90,7 +139,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.pushReplacement(_context,FadePageRoute(AnimatedLoginPage()));
+        Navigator.pushReplacement(_context, FadePageRoute(AnimatedLoginPage()));
       },
     );
   }

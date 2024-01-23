@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors, unused_import, no_leading_underscores_for_local_identifiers, unused_field
+
 import 'package:flutter/material.dart';
-import '../../pages/home_page.dart';
 
 class FadePageRoute extends PageRouteBuilder {
   final Widget _child;

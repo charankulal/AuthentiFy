@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, must_be_immutable
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_final_fields, unused_field, no_leading_underscores_for_local_identifiers, must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import '../utils/animations/login_page_animations.dart';
@@ -21,8 +21,8 @@ class _AnimatedLoginPageState extends State<AnimatedLoginPage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
-      reverseDuration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 1300),
+      reverseDuration: Duration(milliseconds: 1300),
     );
   }
 
@@ -47,8 +47,7 @@ class _LoginPage extends StatelessWidget {
   late AnimationController _controller;
   late EnterAnimation _animation;
 
-  _LoginPage(_controller) {
-    _controller = _controller;
+  _LoginPage(this._controller) {
     _animation = EnterAnimation(_controller);
     _controller.forward();
   }
@@ -190,8 +189,9 @@ class _LoginPage extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onPressed: () {
-        Navigator.pushReplacement(_context, FadePageRoute(HomePage()));
+      onPressed: () async {
+        await _controller.reverse();
+        Navigator.pushReplacement(_context, FadePageRoute(AnimatedHomePage()));
       },
     );
   }
