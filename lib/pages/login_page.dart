@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../utils/animations/login_page_animations.dart';
+import './home_page.dart';
 
 class AnimatedLoginPage extends StatefulWidget {
   @override
@@ -75,7 +76,7 @@ class _LoginPage extends StatelessWidget {
               SizedBox(
                 height: _deviceHeight * 0.10,
               ),
-              _loginButton(),
+              _loginButton(context),
             ],
           ),
         ),
@@ -169,7 +170,7 @@ class _LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _loginButton() {
+  Widget _loginButton(BuildContext _context) {
     return MaterialButton(
       minWidth: _deviceWidth * 0.30,
       height: _deviceWidth * 0.10,
@@ -188,7 +189,12 @@ class _LoginPage extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(_context,
+            MaterialPageRoute(builder: (BuildContext _context) {
+          return HomePage();
+        }));
+      },
     );
   }
 }
