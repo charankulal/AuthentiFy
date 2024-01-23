@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../utils/animations/login_page_animations.dart';
 import './home_page.dart';
+import '../utils/page_routes/fade_page_route.dart';
 
 class AnimatedLoginPage extends StatefulWidget {
   @override
@@ -190,10 +191,7 @@ class _LoginPage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.push(_context,
-            MaterialPageRoute(builder: (BuildContext _context) {
-          return HomePage();
-        }));
+        Navigator.pushReplacement(_context, FadePageRoute(HomePage()));
       },
     );
   }

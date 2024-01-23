@@ -1,7 +1,8 @@
-// ignore_for_file: unused_field, prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: unused_field, prefer_const_constructors, sized_box_for_whitespace, use_key_in_widget_constructors, must_be_immutable, avoid_unnecessary_containers, no_leading_underscores_for_local_identifiers
 
 import 'package:authentify_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import '../utils/page_routes/fade_page_route.dart';
 
 class HomePage extends StatelessWidget {
   late double _deviceHeight;
@@ -26,9 +27,13 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _avatarWidget(),
-              SizedBox(height: _deviceHeight*0.03,),
+              SizedBox(
+                height: _deviceHeight * 0.03,
+              ),
               _nameWidget(),
-              SizedBox(height: _deviceHeight*0.22,),
+              SizedBox(
+                height: _deviceHeight * 0.22,
+              ),
               _logoutButton(context),
             ],
           ),
@@ -85,10 +90,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.push(_context,
-            MaterialPageRoute(builder: (BuildContext _context) {
-          return AnimatedLoginPage();
-        }));
+        Navigator.pushReplacement(_context,FadePageRoute(AnimatedLoginPage()));
       },
     );
   }
